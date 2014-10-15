@@ -1,0 +1,138 @@
+//Midterm question #3 Odd/Even guessing game
+
+import java.text.DecimalFormat; 
+ import java.util.Random; 
+ import java.util.Scanner;  
+
+ public class oddorevengame 
+ { 
+ 	public static void main(String[] args) 
+	{ 
+ 		Scanner input = new Scanner(System.in); 
+//Midterm question #5
+ 		Random randomizer = new Random(); 
+ 		int cpu_number; 
+ 		int remainder; 
+		int end_games = 0; 
+		double games = 1; 
+		double your_wins = 0; 
+		double accuracy; 
+		boolean valid = false; 
+ 		String[] classify = {"EVEN", "ODD"}; 
+		String[] result = {"win", "lose"}; 
+ 		int[] status = new int[2]; 
+ 		String number_type; 
+ 		String your_answer = null; 
+		
+		System.out.println("Lets play a game where you guess if the number is ODD or EVEN"); 
+
+//Midterm question #4 allows user to play until no longer interested
+		System.out.print("How many times do you want to guess? "); 
+ 		end_games = input.nextInt(); 
+		 
+		if (end_games == 0) 
+ 		{ 
+ 			System.exit(0); 
+		} 
+ 		 
+		System.out.println("Ok lets start"); 
+ 		String[] your_history = new String[end_games]; 
+ 		int[] cpu_numbers = new int[end_games]; 
+ 		String[] cpu_history = new String[end_games]; 
+ 		String[] game_results = new String[end_games]; 
+		 
+		for (int i = 0; i < end_games; i++)  
+ 		{ 
+ 			cpu_number = randomizer.nextInt(100) + 1; 
+ 			remainder = cpu_number % 2; 
+			valid = false; 
+			 
+ 			if (remainder == 0) 
+			{ 
+				number_type = classify[0]; 
+ 			} 
+ 			else 
+ 			{ 
+ 				number_type = classify[1]; 
+ 			} 
+ 			 
+ 			do 
+ 			{ 
+ 				System.out.println("Game " + (int) games); 
+				System.out.print("Is the number ODD or EVEN?"); 
+ 				your_answer = input.next(); 
+				your_history[i] = your_answer; 
+ 				cpu_history[i] = number_type; 
+ 				cpu_numbers[i] = cpu_number; 
+				 
+				if (your_answer.equals(null)) 
+ 				{ 
+					System.exit(0); 
+				} 
+				else if (your_answer.equals("EVEN") || your_answer.equals("ODD")) 
+				{ 
+					valid = true; 
+				} 
+ 				else 
+		{ 
+ 					System.out.println(your_answer + " Please type your guess using all caps."); 
+				} 
+ 			} 
+ 			while (valid == false); 
+//Midterm question #7 tests to see if the answer is odd of
+ 			System.out.println("The computer's number was " + cpu_number + ", which is " + number_type); 
+ 			 
+ 			if (your_answer.equals(number_type)) 
+ 			{ 
+ 				System.out.println("You are correct!" + "\n"); 
+				status[0]++; 
+ 				your_wins++; 
+ 				games++; 
+				game_results[i] = result[0]; 
+			} 
+			else 
+ 			{ 
+				System.out.println("Sorry but you're incorrect." + "\n"); 
+				status[1]++; 
+ 				games++; 
+ 				game_results[i] = result[1]; 
+ 			} 
+		} 
+ 		 
+		System.out.println("The game is over. Here are your results." + "\n"); 
+ 		 
+ 		for (int i = 0; i < end_games ; i++) 
+ 		{ 
+ 			System.out.println("Game #" + i++); 
+ 			System.out.println("Your choice was " + your_history[i]); 
+ 			System.out.println("Computer's choice was " + cpu_history[i]); 
+ 			System.out.println("You " + game_results[i] + "\n"); 
+ 		} 
+ 		 
+ 		accuracy = (your_wins / games) * 100; 
+ 		DecimalFormat df = new DecimalFormat("#.##"); 
+//Midterm question #5 keep track of games and wins 
+ 		System.out.println(" You played " + (int) games + " games " ); 
+ 		System.out.println(" You won " + (int) your_wins + " times "); 
+ 		System.out.printf(" You won " + df.format(accuracy) + " percent of the time" + "\n"); 
+ 		 
+		if (accuracy == 100) 
+ 		{ 
+ 			System.out.println("You won all the games!"); 
+ 		} 
+ 		else if (accuracy >= 75 && accuracy <= 99) 
+ 		{ 
+			System.out.println("You won more games than the computer."); 
+		} 
+ 		else if (accuracy >= 50 && accuracy < 75) 
+ 		{ 
+ 			System.out.println("You can do better"); 
+ 		} 
+ 		else if (accuracy < 50) 
+ 		{ 
+ 			System.out.println("You are not very good at this..."); 
+ 		} 
+ 		 
+		input.close(); 
+ 	} 
+ } 
